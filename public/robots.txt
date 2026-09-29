@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aliashrafpour1382.github.io/fekrino/sitemap.xml

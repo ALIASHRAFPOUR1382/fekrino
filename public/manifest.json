@@ -1,0 +1,27 @@
+{
+  "name": "مؤسسه فکرینو — آموزش هوش و استعداد تحلیلی",
+  "short_name": "فکرینو",
+  "description": "آموزش تخصصی هوش و استعداد تحلیلی برای تیزهوشان با تدریس مهندس علی اشرفپور",
+  "start_url": "/fekrino/",
+  "scope": "/fekrino/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#f97316",
+  "lang": "fa-IR",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/fekrino/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/fekrino/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

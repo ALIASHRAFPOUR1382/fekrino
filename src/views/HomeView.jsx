@@ -1,38 +1,69 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import MenuCard from '../components/MenuCard'
 import AnimatedCounter from '../components/AnimatedCounter'
 import StatsBanner from '../components/StatsBanner'
-import ContactButton from '../components/ContactButton'
+import Typewriter from '../components/Typewriter'
 import site from '../data/site'
 
 const items = [
-  { key: 'free', icon: '▶', title: 'آموزش‌های رایگان', subtitle: '۹ جلسه نمونه از دوره هوش و ریاضی' },
-  { key: 'reviews', icon: '★', title: 'تجربه و رضایت خانواده‌ها', subtitle: 'بازخورد واقعی دانش‌آموزان و والدین' },
-  { key: 'results', icon: '🏆', title: 'قبولی‌ها و نتایج', subtitle: 'گالری کارنامه‌های برتر تیزهوشان' },
-  { key: 'tizhoushan', icon: '🚀', title: 'دوره جامع تیزهوشان', subtitle: '۹۶ جلسه کامل با تدریس مهندس اشرفپور' },
+  { key: 'free', icon: '▶', title: 'آموزش‌های رایگان', subtitle: '۹ جلسه نمونه از دوره هوش' },
+  { key: 'quiz', icon: '📝', title: 'آزمون و تمرین', subtitle: '۸ آزمون هوش با پاسخ تشریحی' },
+  { key: 'tools', icon: '🧮', title: 'درصدساز آزمون', subtitle: 'محاسبه سریع درصد و نمره خام' },
+  { key: 'articles', icon: '📚', title: 'مقالات مشاوره‌ای', subtitle: 'راهنمای موفقیت در تیزهوشان' },
+  { key: 'consult', icon: '📞', title: 'دریافت مشاوره', subtitle: 'مشاوره رایگان با کارشناسان' },
+  { key: 'reviews', icon: '★', title: 'رضایت خانواده‌ها', subtitle: 'بازخورد واقعی دانش‌آموزان' },
+  { key: 'results', icon: '🏆', title: 'قبولی‌ها و نتایج', subtitle: 'گالری کارنامه‌های برتر' },
+  { key: 'tizhoushan', icon: '🚀', title: 'دوره جامع تیزهوشان', subtitle: '۹۶ جلسه کامل ویدیویی' },
   { key: 'math', icon: '∑', title: 'آموزش ریاضی', subtitle: 'پکیج‌های ویدیویی پایه‌به‌پایه' },
-  { key: 'about', icon: '👤', title: 'درباره ما', subtitle: 'رزومه و سابقه مهندس علی اشرفپور' },
+  { key: 'about', icon: '👤', title: 'درباره ما', subtitle: 'رزومه مهندس علی اشرفپور' },
 ]
 
 export default function HomeView({ goTo }) {
+  const heroRef = useRef(null)
+  const { scrollY } = useScroll()
+  const heroY = useTransform(scrollY, [0, 400], [0, -60])
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.4])
+
   return (
     <div className="home">
       <motion.section
+        ref={heroRef}
         className="hero-card"
+        style={{ y: heroY, opacity: heroOpacity }}
         initial={{ opacity: 0, y: 22 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="hero-orb orb-a" />
-        <div className="hero-orb orb-b" />
+        <motion.div
+          className="hero-orb orb-a"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="hero-orb orb-b"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.85, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
+
         <span className="eyebrow">FEKRINO • LEARN SMART</span>
-        <h2>ذهن قوی، مسیر روشن‌تر.</h2>
+        <h2>
+          <Typewriter text="ذهن قوی،" speed={80} />
+          <br />
+          <Typewriter text="مسیر روشن‌تر." speed={80} delay={900} />
+        </h2>
         <p>
           با {site.stats.passRate}٪ قبولی دانش‌آموزان، همراه شما در مسیر تیزهوشان و کنکور فرهنگیان
         </p>
+
         <div className="hero-actions">
-          <button onClick={() => goTo('tizhoushan')}>
+          <motion.button
+            onClick={() => goTo('tizhoushan')}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="glow-btn"
+          >
             مشاهده دوره‌ها <span>←</span>
-          </button>
+          </motion.button>
           <a href={site.telLink} className="hero-contact">
             📞 {site.phoneDisplay}
           </a>
@@ -45,6 +76,7 @@ export default function HomeView({ goTo }) {
         <span>خدمات فکرینو</span>
         <small>برای شروع انتخاب کن</small>
       </div>
+
       {items.map((it, i) => (
         <MenuCard key={it.key} {...it} delay={0.06 * i + 0.08} onClick={() => goTo(it.key)} />
       ))}
