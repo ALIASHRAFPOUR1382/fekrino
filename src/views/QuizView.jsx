@@ -5,6 +5,7 @@ import ContactButton from '../components/ContactButton'
 import Confetti from '../components/Confetti'
 import MagneticButton from '../components/MagneticButton'
 import quizzes from '../data/quizzes'
+import { saveQuizResult } from '../lib/storage'
 
 export default function QuizView({ goBack }) {
   const [activeQuiz, setActiveQuiz] = useState(null)
@@ -16,6 +17,7 @@ export default function QuizView({ goBack }) {
   const [showConfetti, setShowConfetti] = useState(false)
 
   const startQuiz = (quiz) => {
+    sessionStorage.setItem('quiz-start-time', Date.now().toString())
     setActiveQuiz(quiz)
     setCurrent(0)
     setSelected(null)
@@ -48,6 +50,26 @@ export default function QuizView({ goBack }) {
   const nextQuestion = () => {
     if (current + 1 >= activeQuiz.questions.length) {
       const finalPercent = Math.round(((score + 0) / activeQuiz.questions.length) * 100)
+
+      const startTime = sessionStorage.getItem('quiz-start-time')
+      const timeSpent = startTime
+        ? Math.floor((Date.now() - parseInt(startTime)) / 1000)
+        : 0
+
+      try {
+        saveQuizResult({
+          quizId: activeQuiz.id,
+          quizTitle: activeQuiz.title,
+          score: score,
+          total: activeQuiz.questions.length,
+          percent: finalPercent,
+          timeSpent,
+          category: activeQuiz.category || 'hoosh',
+        })
+      } catch (err) {
+        console.warn('saveQuizResult error:', err)
+      }
+
       setFinished(true)
       if (finalPercent >= 70) {
         setShowConfetti(true)

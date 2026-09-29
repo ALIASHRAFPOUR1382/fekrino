@@ -7,16 +7,29 @@ import Reveal from '../components/Reveal'
 import site from '../data/site'
 
 const items = [
+  // آموزش
   { key: 'free', icon: '▶', title: 'آموزش‌های رایگان', subtitle: '۹ جلسه نمونه از دوره هوش' },
-  { key: 'quiz', icon: '📝', title: 'آزمون و تمرین', subtitle: '۸ آزمون هوش با پاسخ تشریحی' },
-  { key: 'tools', icon: '🧮', title: 'درصدساز آزمون', subtitle: 'محاسبه سریع درصد و نمره خام' },
-  { key: 'articles', icon: '📚', title: 'مقالات مشاوره‌ای', subtitle: 'راهنمای موفقیت در تیزهوشان' },
-  { key: 'consult', icon: '📞', title: 'دریافت مشاوره', subtitle: 'مشاوره رایگان با کارشناسان' },
-  { key: 'reviews', icon: '★', title: 'رضایت خانواده‌ها', subtitle: 'بازخورد واقعی دانش‌آموزان' },
-  { key: 'results', icon: '🏆', title: 'قبولی‌ها و نتایج', subtitle: 'گالری کارنامه‌های برتر' },
   { key: 'tizhoushan', icon: '🚀', title: 'دوره جامع تیزهوشان', subtitle: '۹۶ جلسه کامل ویدیویی' },
-  { key: 'math', icon: '∑', title: 'آموزش ریاضی', subtitle: 'پکیج‌های ویدیویی پایه‌به‌پایه' },
-  { key: 'about', icon: '👤', title: 'درباره ما', subtitle: 'رزومه مهندس علی اشرفپور' },
+  { key: 'math', icon: '∑', title: 'آموزش ریاضی', subtitle: 'پکیج‌های پایه‌به‌پایه' },
+
+  // تمرین و ارزیابی
+  { key: 'quiz', icon: '📝', title: 'آزمون و تمرین', subtitle: '۸ آزمون هوش با پاسخ تشریحی' },
+  { key: 'field', icon: '🎓', title: 'انتخاب رشته', subtitle: 'کشف رشته مناسب پایه دهم' },
+  { key: 'tools', icon: '🧮', title: 'درصدساز آزمون', subtitle: 'محاسبه سریع درصد و نمره خام' },
+  { key: 'progress', icon: '🏆', title: 'پیشرفت من', subtitle: 'مدال‌ها و آمار شخصی' },
+
+  // مشاوره
+  { key: 'aichat', icon: '🤖', title: 'دستیار هوشمند', subtitle: 'پاسخ سریع به سوالات و حل مسائل' },
+  { key: 'consult', icon: '📞', title: 'دریافت مشاوره', subtitle: 'مشاوره رایگان با کارشناسان' },
+  { key: 'articles', icon: '📖', title: 'مقالات مشاوره‌ای', subtitle: 'راهنمای موفقیت در تیزهوشان' },
+
+  // درباره
+  { key: 'results', icon: '🎯', title: 'قبولی‌ها و نتایج', subtitle: 'گالری کارنامه‌های برتر' },
+  { key: 'reviews', icon: '⭐', title: 'رضایت خانواده‌ها', subtitle: 'بازخورد واقعی دانش‌آموزان' },
+  { key: 'about', icon: '👤', title: 'درباره مؤسسه', subtitle: 'رزومه مهندس علی اشرفپور' },
+
+  // تنظیمات
+  { key: 'settings', icon: '⚙️', title: 'تنظیمات', subtitle: 'تم، فونت و حالت نمایش' },
 ]
 
 export default function HomeView({ goTo }) {

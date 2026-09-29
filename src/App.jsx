@@ -9,6 +9,8 @@ import Loader from './components/Loader'
 import SEOHead from './components/SEOHead'
 import ChatBot from './components/ChatBot'
 import CustomCursor from './components/CustomCursor'
+import PWAInstall from './components/PWAInstall'
+import Drawer from './components/Drawer'
 import HomeView from './views/HomeView'
 import FreeView from './views/FreeView'
 import ReviewsView from './views/ReviewsView'
@@ -20,13 +22,20 @@ import QuizView from './views/QuizView'
 import ToolsView from './views/ToolsView'
 import ArticlesView from './views/ArticlesView'
 import ConsultView from './views/ConsultView'
+import ProgressView from './views/ProgressView'
+import AIChatView from './views/AIChatView'
+import SettingsView from './views/SettingsView'
+import FieldChoiceView from './views/FieldChoiceView'
 import VideoModal from './components/VideoModal'
 import site from './data/site'
+import { applySettings, getSettings } from './lib/settings'
 
 const views = {
   home: HomeView,
   free: FreeView,
   quiz: QuizView,
+  aichat: AIChatView,
+  progress: ProgressView,
   tools: ToolsView,
   articles: ArticlesView,
   consult: ConsultView,
@@ -35,6 +44,8 @@ const views = {
   tizhoushan: TizhoushanView,
   math: MathView,
   about: AboutView,
+  settings: SettingsView,
+  field: FieldChoiceView,
 }
 
 export default function App() {
@@ -42,7 +53,14 @@ export default function App() {
   const [video, setVideo] = useState(null)
   const [navStack, setNavStack] = useState(['home'])
   const [loading, setLoading] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
+  // اعمال تنظیمات اولیه
+  useEffect(() => {
+    applySettings(getSettings())
+  }, [])
+
+  // Loader
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1800)
     return () => clearTimeout(t)
@@ -87,7 +105,7 @@ export default function App() {
         <ScrollProgress />
 
         <div className="app-container">
-          <Header />
+          <Header onOpenMenu={() => setDrawerOpen(true)} />
 
           <main className="main-content">
             <AnimatePresence mode="wait">
@@ -118,6 +136,9 @@ export default function App() {
                 <ul className="footer-links">
                   <li onClick={() => goTo('tizhoushan')}>دوره تیزهوشان</li>
                   <li onClick={() => goTo('quiz')}>آزمون آنلاین</li>
+                  <li onClick={() => goTo('field')}>انتخاب رشته</li>
+                  <li onClick={() => goTo('aichat')}>دستیار هوشمند</li>
+                  <li onClick={() => goTo('progress')}>پیشرفت من</li>
                   <li onClick={() => goTo('tools')}>درصدساز</li>
                   <li onClick={() => goTo('articles')}>مقالات</li>
                   <li onClick={() => goTo('free')}>آموزش‌های رایگان</li>
@@ -145,9 +166,17 @@ export default function App() {
         </div>
       </div>
 
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        goTo={goTo}
+        currentRoute={route}
+      />
+
       <ScrollToTop />
       <VideoModal video={video} onClose={() => setVideo(null)} />
       <ChatBot />
+      <PWAInstall />
     </>
   )
 }
