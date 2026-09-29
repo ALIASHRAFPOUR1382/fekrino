@@ -2,10 +2,33 @@ import { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import reviews from '../data/reviews'
 
+const featured = reviews.filter((_, i) => i % 4 === 0).slice(0, 8)
+
 export default function ReviewCarousel() {
   const ref = useRef(null)
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
 
+  // autoplay
+  useEffect(() => {
+    if (paused) return
+    const t = setInterval(() => {
+      const el = ref.current
+      if (!el) return
+      const next = (active + 1) % featured.length
+      const cards = el.querySelectorAll('.review-card')
+      const target = cards[next]
+      if (target) {
+        el.scrollTo({
+          left: target.offsetLeft - el.clientWidth / 2 + target.offsetWidth / 2,
+          behavior: 'smooth',
+        })
+      }
+    }, 4500)
+    return () => clearInterval(t)
+  }, [active, paused])
+
+  // تشخیص کارت فعال هنگام اسکرول
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -24,16 +47,33 @@ export default function ReviewCarousel() {
     return () => el.removeEventListener('scroll', handler)
   }, [])
 
+  const goToIndex = (i) => {
+    const el = ref.current
+    if (!el) return
+    const cards = el.querySelectorAll('.review-card')
+    const target = cards[i]
+    if (target) {
+      el.scrollTo({
+        left: target.offsetLeft - el.clientWidth / 2 + target.offsetWidth / 2,
+        behavior: 'smooth',
+      })
+    }
+  }
+
   return (
-    <>
+    <div
+      className="carousel-wrap"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="review-carousel" ref={ref}>
-        {reviews.map((r, i) => (
+        {featured.map((r, i) => (
           <motion.div
             key={i}
             className="review-card"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: Math.min(i * 0.04, 0.6) }}
+            transition={{ delay: Math.min(i * 0.06, 0.5) }}
           >
             <div className="review-top">
               <div className="review-avatar">{r.initial}</div>
@@ -48,11 +88,16 @@ export default function ReviewCarousel() {
           </motion.div>
         ))}
       </div>
+
       <div className="carousel-dots">
-        {reviews.map((_, i) => (
-          <span key={i} className={i === active ? 'active' : ''} />
+        {featured.map((_, i) => (
+          <span
+            key={i}
+            className={i === active ? 'active' : ''}
+            onClick={() => goToIndex(i)}
+          />
         ))}
       </div>
-    </>
+    </div>
   )
 }

@@ -1,17 +1,18 @@
 const lessons = [
-  // هوش
-  { hash: 'hawy7bx', cat: 'hoosh', group: 'هوش تصویری', title: 'دوران — قسمت ۱' },
-  { hash: 'cnv6k41', cat: 'hoosh', group: 'هوش تصویری', title: 'دوران — قسمت ۲' },
-  { hash: 'rsv9io9', cat: 'hoosh', group: 'هوش تجسمی', title: 'شمارش مکعب' },
-  { hash: 'lxs5l2c', cat: 'hoosh', group: 'هوش تجسمی', title: 'تاس‌ها — قسمت ۱' },
-  { hash: 'vwz0ry4', cat: 'hoosh', group: 'هوش کلامی', title: 'مسائل الفبایی' },
-  { hash: 'vgc66z1', cat: 'hoosh', group: 'هوش منطقی', title: 'اصل لانه کبوتری' },
-  { hash: 'bku060j', cat: 'hoosh', group: 'هوش ریاضی', title: 'پیش‌نیازها' },
-  { hash: 'uawn599', cat: 'hoosh', group: 'هوش ریاضی', title: 'اصل ضرب' },
-  { hash: 'ewbctze', cat: 'hoosh', group: 'هوش ریاضی', title: 'دنباله عددها' },
-  { hash: 'jyqq37s', cat: 'hoosh', group: 'هوش محاسباتی', title: 'جمع‌بندی' },
-  { hash: 'qgpj1hm', cat: 'hoosh', group: 'هوش مکانیکی', title: 'چرخ‌دنده‌ها' },
-  // ریاضی
+  // ===== شروع دوره =====
+  { hash: 'zqew4xq', cat: 'hoosh', group: 'شروع دوره', title: 'جلسه ۰ — شروع دوره و تعهد با دانش‌آموز' },
+  { hash: 'erq2b19', cat: 'hoosh', group: 'شروع دوره', title: 'جلسه ۱ — شروع هوش و استعداد تحلیلی' },
+
+  // ===== هوش کلامی و ادبی =====
+  { hash: 'bhb45t9', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۲ — شروع هوش کلامی و ادبی' },
+  { hash: 'set15b1', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۳ — تیپ کلمه‌یابی ۱' },
+  { hash: 'qgct7wx', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۴ — تیپ کلمه‌یابی ۲' },
+  { hash: 'xzci518', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۵ — تیپ روابط کلمات' },
+  { hash: 'faooyaq', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۶ — تیپ دسته‌بندی کلمات' },
+  { hash: 'zxcig8g', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۷ — تیپ جایگذاری کلمه' },
+  { hash: 'sww76ak', cat: 'hoosh', group: 'هوش کلامی و ادبی', title: 'جلسه ۸ — تیپ ترتیب جملات' },
+
+  // ===== ریاضی =====
   { hash: 'z8026u8', cat: 'riazi', group: 'ریاضی پنجم', title: 'پیشرفته' },
   { hash: 'q12i4by', cat: 'riazi', group: 'ریاضی پنجم و ششم', title: 'ضرب کسر در عدد روی محور' },
   { hash: 'd750567', cat: 'riazi', group: 'ریاضی ششم', title: 'فصل اول' },

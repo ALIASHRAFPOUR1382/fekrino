@@ -8,7 +8,9 @@ import ReviewsView from './views/ReviewsView'
 import ResultsView from './views/ResultsView'
 import TizhoushanView from './views/TizhoushanView'
 import MathView from './views/MathView'
+import AboutView from './views/AboutView'
 import VideoModal from './components/VideoModal'
+import site from './data/site'
 
 const views = {
   home: HomeView,
@@ -17,12 +19,12 @@ const views = {
   results: ResultsView,
   tizhoushan: TizhoushanView,
   math: MathView,
+  about: AboutView,
 }
 
 export default function App() {
   const [route, setRoute] = useState('home')
   const [video, setVideo] = useState(null)
-  // 🎯 اسم رو از history به navStack تغییر دادیم
   const [navStack, setNavStack] = useState(['home'])
 
   const goTo = (next) => {
@@ -42,11 +44,9 @@ export default function App() {
     })
   }
 
-  // کلید Back مرورگر
   useEffect(() => {
     const handler = () => goBack()
     window.addEventListener('popstate', handler)
-    // 🎯 اینجا window.history صدا زده می‌شه، نه متغیر لوکال
     window.history.pushState({}, '')
     return () => window.removeEventListener('popstate', handler)
   }, [])
@@ -71,18 +71,48 @@ export default function App() {
             </motion.div>
           </AnimatePresence>
         </main>
+
         <footer className="footer">
-          <div className="footer-brand">مؤسسه فکرینو</div>
-          <p>آموزش تخصصی ریاضی و هوش و استعداد تحلیلی</p>
-          <a
-            className="telegram-link"
-            href="https://t.me/ali_ashrafpour"
-            target="_blank"
-            rel="noreferrer"
-          >
-            ✈ کانال تلگرام
-          </a>
-          <div className="footer-copy">© ۱۴۰۴ — تمامی حقوق محفوظ است</div>
+          <div className="footer-top">
+            <div className="footer-col">
+              <div className="footer-brand">
+                <span className="footer-brand-mark">ف</span>
+                {site.brand}
+              </div>
+              <p>{site.tagline}</p>
+            </div>
+
+            <div className="footer-col">
+              <h4>دسترسی سریع</h4>
+              <ul className="footer-links">
+                <li onClick={() => goTo('tizhoushan')}>دوره تیزهوشان</li>
+                <li onClick={() => goTo('math')}>آموزش ریاضی</li>
+                <li onClick={() => goTo('free')}>آموزش‌های رایگان</li>
+                <li onClick={() => goTo('results')}>نتایج قبولی</li>
+                <li onClick={() => goTo('reviews')}>نظرات والدین</li>
+                <li onClick={() => goTo('about')}>درباره ما</li>
+              </ul>
+            </div>
+
+            <div className="footer-col">
+              <h4>تماس با ما</h4>
+              <a className="footer-contact" href={site.telLink}>
+                📞 {site.phoneDisplay}
+              </a>
+              <p className="footer-note">
+                برای مشاوره و ثبت‌نام با ما تماس بگیرید
+              </p>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>
+              © ۱۴۰۴ — {site.brand} | تمامی حقوق محفوظ است
+            </span>
+            <span className="footer-credit">
+              با تدریس {site.instructor}
+            </span>
+          </div>
         </footer>
       </div>
       <VideoModal video={video} onClose={() => setVideo(null)} />
