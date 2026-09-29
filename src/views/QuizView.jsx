@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import BackButton from '../components/BackButton'
 import ContactButton from '../components/ContactButton'
+import Confetti from '../components/Confetti'
+import MagneticButton from '../components/MagneticButton'
 import quizzes from '../data/quizzes'
 
 export default function QuizView({ goBack }) {
@@ -11,6 +13,7 @@ export default function QuizView({ goBack }) {
   const [answered, setAnswered] = useState(false)
   const [score, setScore] = useState(0)
   const [finished, setFinished] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const startQuiz = (quiz) => {
     setActiveQuiz(quiz)
@@ -19,6 +22,7 @@ export default function QuizView({ goBack }) {
     setAnswered(false)
     setScore(0)
     setFinished(false)
+    setShowConfetti(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -29,6 +33,7 @@ export default function QuizView({ goBack }) {
     setAnswered(false)
     setScore(0)
     setFinished(false)
+    setShowConfetti(false)
   }
 
   const handleSelect = (idx) => {
@@ -42,7 +47,11 @@ export default function QuizView({ goBack }) {
 
   const nextQuestion = () => {
     if (current + 1 >= activeQuiz.questions.length) {
+      const finalPercent = Math.round(((score + 0) / activeQuiz.questions.length) * 100)
       setFinished(true)
+      if (finalPercent >= 70) {
+        setShowConfetti(true)
+      }
     } else {
       setCurrent((c) => c + 1)
       setSelected(null)
@@ -122,6 +131,8 @@ export default function QuizView({ goBack }) {
 
     return (
       <div>
+        <Confetti show={showConfetti} onComplete={() => setShowConfetti(false)} />
+
         <BackButton onClick={backToList} />
         <h2 className="page-title">نتیجه آزمون</h2>
 
@@ -139,12 +150,18 @@ export default function QuizView({ goBack }) {
           </p>
 
           <div className="quiz-result-actions">
-            <button className="quiz-btn-primary" onClick={() => startQuiz(activeQuiz)}>
+            <MagneticButton
+              className="quiz-btn-primary"
+              onClick={() => startQuiz(activeQuiz)}
+            >
               🔄 دوباره تلاش کن
-            </button>
-            <button className="quiz-btn-secondary" onClick={backToList}>
+            </MagneticButton>
+            <MagneticButton
+              className="quiz-btn-secondary"
+              onClick={backToList}
+            >
               📚 آزمون‌های دیگر
-            </button>
+            </MagneticButton>
           </div>
         </motion.div>
 
@@ -191,7 +208,9 @@ export default function QuizView({ goBack }) {
           className="quiz-question-card"
         >
           <div className="quiz-q-header">
-            <span className="quiz-q-badge">{activeQuiz.icon} {activeQuiz.title}</span>
+            <span className="quiz-q-badge">
+              {activeQuiz.icon} {activeQuiz.title}
+            </span>
             <span className="quiz-q-diff">{q.difficulty || 'متوسط'}</span>
           </div>
 
@@ -216,8 +235,12 @@ export default function QuizView({ goBack }) {
                 >
                   <span className="quiz-opt-num">{idx + 1}</span>
                   <span className="quiz-opt-text">{opt}</span>
-                  {answered && idx === q.answer && <span className="quiz-opt-icon">✓</span>}
-                  {answered && idx === selected && idx !== q.answer && <span className="quiz-opt-icon">✕</span>}
+                  {answered && idx === q.answer && (
+                    <span className="quiz-opt-icon">✓</span>
+                  )}
+                  {answered && idx === selected && idx !== q.answer && (
+                    <span className="quiz-opt-icon">✕</span>
+                  )}
                 </motion.button>
               )
             })}
@@ -248,7 +271,9 @@ export default function QuizView({ goBack }) {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
-              {current + 1 >= activeQuiz.questions.length ? 'مشاهده نتیجه 🎯' : 'سوال بعدی →'}
+              {current + 1 >= activeQuiz.questions.length
+                ? 'مشاهده نتیجه 🎯'
+                : 'سوال بعدی →'}
             </motion.button>
           )}
         </motion.div>

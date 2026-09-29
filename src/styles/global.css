@@ -3224,3 +3224,306 @@ body::before {
     height: 54px;
   }
 }
+
+/* =====================================================
+   PHASE 8 — PREMIUM ANIMATIONS
+   ===================================================== */
+
+/* ========== Confetti ========== */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  will-change: transform;
+}
+
+/* ========== Custom Cursor ========== */
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s;
+}
+
+.custom-cursor-dot.visible,
+.custom-cursor-ring.visible {
+  opacity: 1;
+}
+
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #f97316;
+  border-radius: 50%;
+  transition: opacity 0.2s, width 0.25s, height 0.25s;
+}
+
+.custom-cursor-dot.hover {
+  width: 10px;
+  height: 10px;
+  background: #facc15;
+}
+
+.custom-cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(249, 115, 22, 0.55);
+  border-radius: 50%;
+  transition: opacity 0.2s, width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+}
+
+.custom-cursor-ring.hover {
+  width: 54px;
+  height: 54px;
+  border-color: rgba(250, 204, 21, 0.8);
+  background: rgba(250, 204, 21, 0.08);
+}
+
+/* روی دسکتاپ، کرسر پیش‌فرض مخفی */
+@media (pointer: fine) {
+  body,
+  button,
+  a,
+  .menu-card,
+  .lesson-card,
+  .quiz-card,
+  input,
+  select,
+  textarea {
+    cursor: none;
+  }
+}
+
+/* ========== Typing Dots ========== */
+.typing-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  animation: typingDot 1.2s infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ========== Glow on hover for cards ========== */
+.quiz-card:hover,
+.menu-card:hover,
+.lesson-card:hover {
+  position: relative;
+}
+
+.quiz-card::after,
+.menu-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  opacity: 0;
+  z-index: -1;
+  filter: blur(12px);
+  transition: opacity 0.3s;
+}
+
+.quiz-card:hover::after,
+.menu-card:hover::after {
+  opacity: 0.4;
+}
+
+/* ========== Shimmer for Stats ========== */
+.stats-banner-num {
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-banner-num::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5),
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0%, 60%, 100% { transform: translateX(-100%); }
+  30% { transform: translateX(100%); }
+}
+
+/* ========== Page Enter Animation ========== */
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ========== Smooth focus rings ========== */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+/* ========== Button pulse on hover ========== */
+.quiz-btn-primary:hover,
+.form-submit:hover:not(:disabled),
+.tool-reset:hover {
+  animation: buttonPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% { box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3); }
+  50% { box-shadow: 0 12px 28px rgba(249, 115, 22, 0.55); }
+}
+
+/* ========== Reduce motion ========== */
+@media (prefers-reduced-motion: reduce) {
+  .confetti-container,
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+  .stats-banner-num::after {
+    display: none;
+  }
+}
+
+/* =====================================================
+   PHASE 9 — PWA INSTALL
+   ===================================================== */
+
+.pwa-install-banner {
+  position: fixed;
+  bottom: 100px;
+  left: 16px;
+  right: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  background: linear-gradient(145deg, #171717, #262626);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 998;
+  color: #fff;
+}
+
+.pwa-close {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+.pwa-close:hover { background: rgba(255, 255, 255, 0.2); }
+
+.pwa-install-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.4);
+}
+
+.pwa-install-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pwa-install-text strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #facc15;
+  font-weight: 800;
+  margin-bottom: 3px;
+}
+
+.pwa-install-text span {
+  display: block;
+  font-size: 0.72rem;
+  color: #d1d5db;
+  line-height: 1.5;
+}
+
+.pwa-install-btn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #171717;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.35);
+  transition: transform 0.2s;
+}
+.pwa-install-btn:hover { transform: translateY(-2px); }
+
+@media (max-width: 480px) {
+  .pwa-install-banner {
+    bottom: 90px;
+    left: 10px;
+    right: 10px;
+    padding: 12px 14px;
+  }
+  .pwa-install-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+  .pwa-install-text strong { font-size: 0.82rem; }
+  .pwa-install-text span { font-size: 0.68rem; }
+  .pwa-install-btn { padding: 8px 14px; font-size: 0.78rem; }
+}

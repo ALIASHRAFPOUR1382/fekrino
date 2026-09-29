@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import MenuCard from '../components/MenuCard'
-import AnimatedCounter from '../components/AnimatedCounter'
 import StatsBanner from '../components/StatsBanner'
 import Typewriter from '../components/Typewriter'
+import Reveal from '../components/Reveal'
 import site from '../data/site'
 
 const items = [
@@ -70,26 +70,27 @@ export default function HomeView({ goTo }) {
         </div>
       </motion.section>
 
-      <StatsBanner />
+      <Reveal delay={0.1}>
+        <StatsBanner />
+      </Reveal>
 
-      <div className="section-heading">
-        <span>خدمات فکرینو</span>
-        <small>برای شروع انتخاب کن</small>
-      </div>
+      <Reveal delay={0.15}>
+        <div className="section-heading">
+          <span>خدمات فکرینو</span>
+          <small>برای شروع انتخاب کن</small>
+        </div>
+      </Reveal>
 
       {items.map((it, i) => (
         <MenuCard key={it.key} {...it} delay={0.06 * i + 0.08} onClick={() => goTo(it.key)} />
       ))}
 
-      <motion.div
-        className="signature-card"
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <span>{site.instructor}</span>
-        <small>دانشجوی ارشد هوش مصنوعی دانشگاه تبریز</small>
-      </motion.div>
+      <Reveal delay={0.1}>
+        <div className="signature-card">
+          <span>{site.instructor}</span>
+          <small>دانشجوی ارشد هوش مصنوعی دانشگاه تبریز</small>
+        </div>
+      </Reveal>
     </div>
   )
 }

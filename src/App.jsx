@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Loader from './components/Loader'
 import SEOHead from './components/SEOHead'
 import ChatBot from './components/ChatBot'
+import CustomCursor from './components/CustomCursor'
 import HomeView from './views/HomeView'
 import FreeView from './views/FreeView'
 import ReviewsView from './views/ReviewsView'
@@ -76,6 +77,7 @@ export default function App() {
   return (
     <>
       <SEOHead route={route} />
+      <CustomCursor />
 
       <AnimatePresence>{loading && <Loader />}</AnimatePresence>
 
